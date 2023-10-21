@@ -1,21 +1,31 @@
 // [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+enum class Nivel { BASICO, INTERMEDIARIO, AVANCADO } // antes: { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+data class Usuario(val nome: String) // transformado em data class.
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+data class ConteudoEducacional(val nome: String) // removida a propriedade 'duracao'.
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
-
+data class Formacao(val nome: String, val conteudos: List<ConteudoEducacional>) {
     val inscritos = mutableListOf<Usuario>()
-    
-    fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+
+    fun matricular(vararg usuarios: Usuario) {
+        inscritos.addAll(usuarios.toList())
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    // Criando alguns objetos e simulando cenários de teste.
+    val usuario1 = Usuario("João")
+    val usuario2 = Usuario("Maria")
+
+    val conteudo1 = ConteudoEducacional("Introdução à Kotlin")
+    val conteudo2 = ConteudoEducacional("Programação Orientada a Objetos em Kotlin")
+
+    val formacaoKotlin = Formacao("Formação em Kotlin", listOf(conteudo1, conteudo2))
+
+    formacaoKotlin.matricular(usuario1, usuario2)
+
+    println("Inscritos na formação ${formacaoKotlin.nome}:")
+    formacaoKotlin.inscritos.forEach { println(it.nome) }
 }
